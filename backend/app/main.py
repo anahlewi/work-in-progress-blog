@@ -16,6 +16,7 @@ app = FastAPI()
 
 origins = [
     "http://localhost:5173",
+    "https://work-in-progress-blog.vercel.app", 
 ]
 
 app.add_middleware(
@@ -26,12 +27,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # Pydantic model for a note
 class Note(BaseModel):
     title: str
     content: str
-
 
 @app.get("/notes")
 def get_notes():

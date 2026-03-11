@@ -1,8 +1,8 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { fetchNotes, createNote, fetchNote } from '../api/notes';
-import NoteCardsContainer from './components/NoteCardsContainer';
-import NoteContent from './components/content';
+import NoteCardsContainer from './components/NoteCardsContainer.tsx';
+import NoteContent from './components/content.tsx';
 
 export type Note = {
   id: string;
