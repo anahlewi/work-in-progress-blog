@@ -7,8 +7,8 @@
   
     },  
     {
-      "source": "/api/:path*/",
-      "destination": "https://work-in-progress-blog-backend.vercel.app/:path*/"
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ]
 }
