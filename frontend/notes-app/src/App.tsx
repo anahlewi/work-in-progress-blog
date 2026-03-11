@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchNotes, createNote, fetchNote } from '../api/notes';
+import { fetchNotes, createNote, fetchNote } from './api/notes.ts';
 import NoteCardsContainer from './components/NoteCardsContainer.tsx';
 import NoteContent from './components/content.tsx';
 
