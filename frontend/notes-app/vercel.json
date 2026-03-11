@@ -1,8 +1,15 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "https://work-in-progress-blog-backend.vercel.app/api/:path*"
+  
+    },  
+    {
+      "source": "/api/:path*/",
+      "destination": "https://work-in-progress-blog-backend.vercel.app/api/:path*/"
     }
   ]
 }
+
