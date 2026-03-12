@@ -32,13 +32,12 @@ const NoteCardsContainer: React.FC<NoteCardsContainerProps> = ({
   }, []);
   
   return (
-    <nav ref={contentRef} className="fixed dark:bg-muted overflow-y-auto left-0 top-0 h-screen w-72 z-50 border-r border-muted-border/50" >
+    <nav ref={contentRef} className="w-full h-full dark:bg-muted overflow-y-auto border-r border-muted-border/50 flex flex-col">
       <ToolBar scrolled={scrolled} createNewNote={setSelectedNote} />
-      <div className="p-1.5">
+      <div className="p-1.5 flex-1 overflow-y-auto">
         <SearchBar query={query} setQuery={setQuery} />
         <NoteCards notes={notes} setSelectedNote={setSelectedNote} />
       </div>
-
     </nav>
   );
 }

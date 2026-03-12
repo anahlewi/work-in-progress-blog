@@ -17,6 +17,7 @@ export function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [lastSavedNoteId, setLastSavedNoteId] = useState<string | null>(null);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
     // Calling fetchNotes and fetchNote to populate initial state
@@ -24,6 +25,15 @@ export function App() {
     fetchNote("about me").then(setSelectedNote);
   }, []);
   
+  const handleSelectNote = (note: Note | null) => {
+    setSelectedNote(note);
+    setShowContent(true);
+  };
+
+  const handleBackToList = () => {
+    setShowContent(false);
+  };
+
   const autosave = useCallback(() => {
     if (!title && !content) return;
     // Prevent duplicate autosave for the same note
@@ -48,10 +58,12 @@ export function App() {
 
   return (
     <div className='flex flex-row h-screen w-screen'>
-      <div className='flex-1 flex flex-col'>
-        <NoteCardsContainer notes={notes} setSelectedNote={setSelectedNote} />
+      {/* Cards Container - full width on mobile when content not shown, fixed width on desktop */}
+      <div className={`${showContent ? 'hidden md:flex' : 'flex'} flex-col md:w-72 w-full transition-all`}>
+        <NoteCardsContainer notes={notes} setSelectedNote={handleSelectNote} />
       </div>
-      <div className="flex-2 h-screen overflow-y-auto">
+      {/* Content View - full width on mobile when shown, flex on desktop */}
+      <div className={`${showContent ? 'flex' : 'hidden md:flex'} flex-col flex-1 h-screen overflow-y-auto`}>
         <NoteContent
           currentNote={selectedNote}
           title={title}
@@ -59,6 +71,7 @@ export function App() {
           setTitle={setTitle}
           setContent={setContent}
           autosave={autosave}
+          onBack={handleBackToList}
         />
       </div>
     </div>

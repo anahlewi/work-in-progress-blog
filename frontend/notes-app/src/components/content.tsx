@@ -1,6 +1,6 @@
 import React from "react";
 import type { Note } from "../App";
-
+import { CaretLeftIcon, Share2Icon } from "@radix-ui/react-icons";
 
 import { useEffect, useRef } from "react";
 
@@ -11,6 +11,7 @@ type NoteContentProps = {
   setTitle: (title: string) => void;
   setContent: (content: string) => void;
   autosave: () => void;
+  onBack?: () => void;
 };
 
 const NoteContent: React.FC<NoteContentProps> = ({
@@ -19,7 +20,8 @@ const NoteContent: React.FC<NoteContentProps> = ({
   content,
   setTitle,
   setContent,
-  autosave
+  autosave,
+  onBack
 }) => {
   const autosaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
@@ -39,33 +41,53 @@ const NoteContent: React.FC<NoteContentProps> = ({
       hour: '2-digit',
       minute: '2-digit',}) : '';
   return (
-    <div className="p-4 flex-1 height-screen overflow-y-auto">
-      <div>
-        <p className="text-xs text-gray-500 text-center">{createdAt}</p>
+    <div className="w-full h-full flex flex-col">
+      {/* Back button - only visible on mobile */}
+      <div className="md:hidden flex items-center justify-between p-2">
+        <button
+          onClick={onBack}
+          className="text-white hover:opacity-70 transition-opacity"
+          aria-label="Back to notes"
+        >
+          <CaretLeftIcon className="w-8 h-8 mt-3" />
+        </button>
+        <button
+          onClick={() => {}}
+          className="text-white hover:opacity-70 transition-opacity"
+          aria-label="share note"
+        >
+          <Share2Icon className="w-5 h-5 mt-3" />
+        </button>
+      </div>
+      {/* Content area */}
+      <div className="p-4 flex-1 height-screen overflow-y-auto">
+        <div>
+          <p className="text-xs text-gray-500 text-center">{createdAt}</p>
 
-      <ul className="mb-6 space-y-4">
-          <li key={currentNote?.id} className="pb-2">
-            <h3 className="font-semibold">{currentNote?.title}</h3>
-            <p>{currentNote?.content}</p>
-          </li>
-      </ul>
-      {(currentNote?.title === "" && currentNote?.content === "") && (
-        <div className="flex flex-col gap-2">
-          <input
-            type="text"
-            className="border-none bg-transparent mb-5 focus:outline-none"
-            placeholder="Add your title here..."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <textarea
-            className="border-none bg-transparent focus:outline-none resize-none rounded"
-            placeholder="Add your note here..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </div>
-      )}
+        <ul className="mb-6 space-y-4">
+            <li key={currentNote?.id} className="pb-2">
+              <h3 className="font-semibold">{currentNote?.title}</h3>
+              <p>{currentNote?.content}</p>
+            </li>
+        </ul>
+        {(currentNote?.title === "" && currentNote?.content === "") && (
+          <div className="flex flex-col gap-2">
+            <input
+              type="text"
+              className="border-none bg-transparent mb-5 focus:outline-none"
+              placeholder="Add your title here..."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+            <textarea
+              className="border-none bg-transparent focus:outline-none resize-none rounded"
+              placeholder="Add your note here..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </div>
+        )}
+      </div>
     </div>
   </div>
 )};
