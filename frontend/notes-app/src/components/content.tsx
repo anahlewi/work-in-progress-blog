@@ -72,7 +72,7 @@ const handleShare = async () => {
           <CaretLeftIcon className="w-8 h-8 mt-3" />
         </button>
         <button
-          onClick={() => {}}
+          onClick={handleShare}
           className="text-white hover:opacity-70 transition-opacity"
           aria-label="share note"
         >
@@ -92,9 +92,12 @@ const handleShare = async () => {
         </ul> */}
         
         <h3 className="font-semibold">{currentNote?.title}</h3>
-        <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+        <article>
+            <ReactMarkdown remarkPlugins={[remarkBreaks]}>
           {currentNote?.content || ""}
         </ReactMarkdown>
+        </article>
+      
         {(currentNote?.title === "" && currentNote?.content === "") && (
           <div className="flex flex-col gap-2">
             <input
