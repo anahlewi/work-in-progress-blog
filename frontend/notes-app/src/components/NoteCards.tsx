@@ -1,6 +1,7 @@
 import React from "react";
 import type { Note } from "../App";
 import { DrawingPinIcon } from "@radix-ui/react-icons";
+import ReactMarkdown from "react-markdown";
 
 type NoteCardProps = {
   notes: Note[];
@@ -32,7 +33,9 @@ const NoteCards: React.FC<NoteCardProps> = ({
             <h2 className=' text-sm text-black dark:text-white font-bold mb-1'>{note.title}</h2>
             <p className="text-xs text-muted-foreground dark:text-white/80 font-normal"> 
               <span className="dark:text-white font-normal">{new Date(note.created_at).toLocaleString('en-US', {year: 'numeric', month: '2-digit', day: '2-digit',})} </span>
-              {note.content}
+              <div className="line-clamp-1 .truncate-ellipsis">
+                <ReactMarkdown children={(note.content || "").replace(/&nbsp;|\s+/g, ' ').trim()} />
+              </div>
              </p>
           </a>
         </li> 

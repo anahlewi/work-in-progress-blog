@@ -1,5 +1,7 @@
 import React from "react";
 import type { Note } from "../App";
+import ReactMarkdown from "react-markdown";
+import remarkBreaks from 'remark-breaks';
 import { CaretLeftIcon, Share2Icon } from "@radix-ui/react-icons";
 
 import { useEffect, useRef } from "react";
@@ -23,6 +25,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
   autosave,
   onBack
 }) => {
+
   const autosaveTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (autosaveTimeout.current) clearTimeout(autosaveTimeout.current);
@@ -33,6 +36,7 @@ const NoteContent: React.FC<NoteContentProps> = ({
       if (autosaveTimeout.current) clearTimeout(autosaveTimeout.current);
     };
   }, [title, content, autosave]);
+
   const createdAt = currentNote ? new Date(currentNote.created_at).toLocaleString(
     'en-US', {
       year: 'numeric',
@@ -40,6 +44,22 @@ const NoteContent: React.FC<NoteContentProps> = ({
       day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',}) : '';
+  
+const shareData = {
+  title: title,
+  text: content,
+  url: 'https://example.com'
+};
+
+const handleShare = async () => {
+  try {
+    await navigator.share(shareData);
+    console.log('Webpage shared successfully');
+  } catch (err) {
+    console.error('Error sharing webpage:', err);
+  }
+};
+
   return (
     <div className="w-full h-full flex flex-col">
       {/* Back button - only visible on mobile */}
@@ -62,14 +82,19 @@ const NoteContent: React.FC<NoteContentProps> = ({
       {/* Content area */}
       <div className="p-4 flex-1 height-screen overflow-y-auto">
         <div>
-          <p className="text-xs text-gray-500 text-center">{createdAt}</p>
+        <p className="text-xs text-gray-500 text-center">{createdAt}</p>
 
-        <ul className="mb-6 space-y-4">
+        {/* <ul className="mb-6 space-y-4">
             <li key={currentNote?.id} className="pb-2">
               <h3 className="font-semibold">{currentNote?.title}</h3>
               <p>{currentNote?.content}</p>
             </li>
-        </ul>
+        </ul> */}
+        
+        <h3 className="font-semibold">{currentNote?.title}</h3>
+        <ReactMarkdown remarkPlugins={[remarkBreaks]}>
+          {currentNote?.content || ""}
+        </ReactMarkdown>
         {(currentNote?.title === "" && currentNote?.content === "") && (
           <div className="flex flex-col gap-2">
             <input
