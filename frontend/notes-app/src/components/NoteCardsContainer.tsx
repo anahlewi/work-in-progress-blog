@@ -7,11 +7,13 @@ import { useEffect, useRef } from "react";
 
 type NoteCardsContainerProps = {
   notes: Note[];
+  selectedNoteId: string | null;
   setSelectedNote: (note: Note | null) => void;
 };
 
 const NoteCardsContainer: React.FC<NoteCardsContainerProps> = ({
   notes,
+  selectedNoteId,
   setSelectedNote,
 }) => {
   const [query, setQuery] = React.useState("");
@@ -36,7 +38,7 @@ const NoteCardsContainer: React.FC<NoteCardsContainerProps> = ({
       <ToolBar scrolled={scrolled} createNewNote={setSelectedNote} />
       <div className="p-1.5 flex-1 overflow-y-auto">
         <SearchBar query={query} setQuery={setQuery} />
-        <NoteCards notes={notes} setSelectedNote={setSelectedNote} />
+        <NoteCards notes={notes} selectedNoteId={selectedNoteId} setSelectedNote={setSelectedNote} />
       </div>
     </nav>
   );

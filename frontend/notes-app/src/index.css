@@ -31,6 +31,60 @@ a:hover {
   color: #535bf2;
 }
 
+/* Rendered note/post content */
+.markdown-body {
+  line-height: 1.6;
+}
+.markdown-body :not(pre) > code {
+  background: var(--color-muted);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+  font-size: 0.85em;
+}
+.markdown-body pre {
+  background: var(--color-muted);
+  border: 1px solid var(--color-muted-border);
+  border-radius: 8px;
+  padding: 1em;
+  overflow-x: auto;
+  margin: 1em 0;
+}
+.markdown-body pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+.markdown-body blockquote {
+  border-left: 3px solid var(--color-muted-border);
+  margin: 1em 0;
+  padding: 0 1em;
+  color: var(--color-muted-foreground);
+}
+.markdown-body table {
+  border-collapse: collapse;
+  margin: 1em 0;
+  width: 100%;
+}
+.markdown-body th,
+.markdown-body td {
+  border: 1px solid var(--color-muted-border);
+  padding: 0.4em 0.8em;
+  text-align: left;
+}
+.markdown-body th {
+  background: var(--color-muted);
+}
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.5em;
+}
+.markdown-body hr {
+  border: none;
+  border-top: 1px solid var(--color-muted-border);
+  margin: 2em 0;
+}
+
 body {
   margin: 0;
   display: flex;
